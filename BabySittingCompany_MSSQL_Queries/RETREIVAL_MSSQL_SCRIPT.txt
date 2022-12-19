@@ -1,14 +1,22 @@
--- Query_1 Show skills which baby sitter have and languages spoken (Inner join)
+# Query_1 Show skills which baby sitter have and languages spoken (Inner join)
 
+ 
 
 SELECT BABY_SITTER.SSN, BABY_SITTER.FULL_NAME, BABY_SITTER_LANGUAGE.LANGUAGE_SPOKEN
 
 FROM BABY_SITTER INNER JOIN BABY_SITTER_LANGUAGE ON BABY_SITTER.SSN = BABY_SITTER_LANGUAGE.SSN;
 
+ 
 
+ 
 
---Query_2 - count of all the employees in each branch
+ 
 
+ 
+
+# Query_2 - count of all the employees in each branch
+
+ 
 
 SELECT COMPANY.BRANCH_ID, COMPANY.BRANCH_NAME, COUNT(BABY_SITTER.SSN) as NUMBER_OF_EMPLOYEES
 
@@ -18,12 +26,39 @@ GROUP BY COMPANY.BRANCH_ID, COMPANY.BRANCH_NAME;
 
  
 
+ 
 
+ 
 
--- Query_3 - Determining number of hours worked
+ 
 
--- DATEDIFF WORKS ON MS SQL AND MYSQL VERSION OF DATEDIFF IS DIFFERENT
-SELECT FULL_NAME, AVAILABLE_DAY_OF_WEEK,DATEDIFF(hour,cast(AVAILABLE_START_TIME as time), CAST(AVAILABLE_END_TIME as time )) AS NUMBER_OF_HOURS
+# Include - Number of female workers and number of male workers
+
+ 
+
+ 
+
+ 
+
+# Query_3 - Determining performance levels of baby sitters based on number of hours worked
+
+ 
+
+MS SQL - 
+
+ 
+
+SELECT FULL_NAME, AVAILABLE_DAY_OF_WEEK,DATEDIFF(hour,cast(AVAILABLE_START_TIME as time), CAST(AVAILABLE_END_TIME as time )) AS NUMBER_OF_HOURS,
+
+CASE 
+
+WHEN RANK() OVER(ORDER BY DATEDIFF(hour,cast(AVAILABLE_START_TIME as time), CAST(AVAILABLE_END_TIME as time )) DESC) = 1 THEN 'Top performer'
+
+WHEN RANK() OVER(ORDER BY DATEDIFF(hour,cast(AVAILABLE_START_TIME as time), CAST(AVAILABLE_END_TIME as time ))) = 1 THEN 'Least Performer'
+
+ELSE 'Normal Performer'
+
+END AS PERFORMANCE_LEVEL
 
 FROM BABY_SITTER
 
@@ -31,8 +66,21 @@ ORDER BY NUMBER_OF_HOURS DESC;
 
  
 
--- Query_4 - Employees who do not have contracts yet  WILL BE SHOWN AS NULL
+ 
 
+ 
+
+ 
+
+ 
+
+ 
+
+# Query_4 - Employees who do not have contracts yet
+
+ 
+
+ 
 
 SELECT * FROM COMPANY
 
@@ -42,14 +90,31 @@ LEFT JOIN CONTRACT ON BABY_SITTER.SSN = CONTRACT.SSN
 
 ;
 
-
--- QUERY_5 - Update family email ID
-
-UPDATE FAMILY_EMAIL SET EMAIL = 'ijk@yahoo.com' WHERE FAMILY_ID = 1 AND EMAIL = 'xyy@gmail.com';
+ 
 
  
 
--- Query_6 - Update family mobile number 
+ 
+
+ 
+
+# QUERY_5 - Update family email ID
+
+ 
+
+ 
+
+UPDATE FAMILY_EMAIL
+
+SET EMAIL = 'ijk@yahoo.com'
+
+WHERE FAMILY_ID = 1 AND EMAIL = 'xyy@gmail.com’;
+
+ 
+
+ 
+
+# Query_6 - Update family mobile number 
 
  
 
@@ -61,11 +126,15 @@ WHERE FAMILY_ID = 2 AND MOBILE_NUMBER = '2234567891';
 
  
 
+ 
 
  
 
--- Query_7 - Delete contract and child if contract got expired 30 days back - 
+# Query_7 - Delete contract and child if contract got expired 30 days back - 
 
+ 
+
+-- MS SQL VERSION
 
 DELETE FROM CHILD WHERE CONTRACT_ID IN 
 
@@ -85,7 +154,7 @@ DELETE FROM CONTRACT WHERE DATEDIFF(DAY, END_DATE,CAST(CURRENT_TIMESTAMP AS date
 
  
 
--- Query_8 - count number of families and number of children present in each branch 
+# Query_8 - count number of families and number of children present in each branch 
 
  
 
@@ -129,7 +198,13 @@ SELECT * FROM FIND_NUMBER_OF_CUSTOMERS;
 
  
 
--- Query_9 -  estimate the monthly salary for baby sitters
+# Query_9 -  estimate the monthly salary for baby sitters
+
+ 
+
+ 
+
+MS SQL - 
 
  
 
@@ -165,11 +240,17 @@ SELECT * FROM ESTIMATED_MONTHLY_PAY;
 
  
 
--- Query_10 - Total expenditure from each branch
+# Query_10 - Total expenditure from each branch
 
  
 
-CREATE VIEW ESTIMATED_MONTHLY_PAY_ AS
+ 
+
+MS SQL - 
+
+ 
+
+WITH ESTIMATED_MONTHLY_PAY_CTE AS
 
 (
 
@@ -185,13 +266,13 @@ GROUP BY BRANCH_ID,FULL_NAME,CAST((DATEDIFF(MINUTE,cast(AVAILABLE_START_TIME as 
 
 CAST((DATEDIFF(MINUTE,cast(AVAILABLE_START_TIME as time), CAST(AVAILABLE_END_TIME as time))/60.0) AS DECIMAL(18,2)) * HOURLY_PAY_RATE
 
-);
+)
 
-SELECT COMPANY.BRANCH_ID, COMPANY.BRANCH_NAME, SUM(ESTIMATED_MONTHLY_PAY_.ESTIMATED_MONTHLY_PAY) AS TOTAL_EXPENDITURE
+SELECT COMPANY.BRANCH_ID, COMPANY.BRANCH_NAME, SUM(ESTIMATED_MONTHLY_PAY_CTE.ESTIMATED_MONTHLY_PAY) AS TOTAL_EXPENDITURE
 
 FROM COMPANY
 
-INNER JOIN ESTIMATED_MONTHLY_PAY_ ON COMPANY.BRANCH_ID = ESTIMATED_MONTHLY_PAY_.BRANCH_ID
+INNER JOIN ESTIMATED_MONTHLY_PAY_CTE ON COMPANY.BRANCH_ID = ESTIMATED_MONTHLY_PAY_CTE.BRANCH_ID
 
 GROUP BY COMPANY.BRANCH_ID, COMPANY.BRANCH_NAME
 
@@ -205,7 +286,7 @@ ORDER BY TOTAL_EXPENDITURE DESC
 
  
 
--- Query_11 - Total income from each branch - 
+# Query_11 - Total income from each branch - 
 
  
 
@@ -241,7 +322,7 @@ SELECT * FROM TOTAL_MONTHLY_INCOME;
 
  
 
--- Query_12 - Number of children filtered by gender in each branch
+# Query_12 - Number of children filtered by gender in each branch
 
  
 
@@ -291,10 +372,11 @@ GROUP BY C.BRANCH_NAME
 
  
 
--- Query_13 - Families who have multiple children admitted for baby sitting
+# Query_13 - Families who have multiple children admitted for baby sitting
 
  
 
+ 
 
 SELECT F.FAMILY_ID,F.FULL_NAME,COUNT(CHILD_ID) AS NUMBER_OF_CHILDREN
 
@@ -311,7 +393,8 @@ HAVING COUNT(CHILD_ID) > 1
  
 
  
--- Query_14 - LANGUAGES OFFERED IN EACH BRANCH
+
+# Query_14 - LANGUAGES OFFERED IN EACH BRANCH
 
  
 
@@ -329,7 +412,7 @@ INNER JOIN BABY_SITTER_LANGUAGE AS BL ON BL.SSN = B.SSN
 
  
 
--- Query_15 - Distinct skills of baby sitters from each branch
+# Query_15 - Distinct skills of baby sitters from each branch
 
  
 
@@ -353,7 +436,7 @@ ORDER BY C.BRANCH_NAME;
 
  
 
--- Query_16 - Number of families from each state and city
+# Query_16 - Number of families from each state and city
 
  
 
@@ -363,7 +446,7 @@ SELECT STATE, CITY, COUNT(FAMILY_ID) AS NUMBER_OF_FAMILIES
 
 FROM FAMILY AS F
 
-GROUP BY STATE, CITY;
+GROUP BY STATE, CITY
 
  
 
@@ -381,11 +464,11 @@ INNER JOIN BABY_SITTER AS B ON B.SSN = C.SSN
 
 INNER JOIN CONTRACT_SERVICES AS CS ON CS.CONTRACT_ID = C.CONTRACT_ID
 
-);
+)
 
  
 
-SELECT * FROM SERVICES_EXPECTED_FROM_CONTRACT;
+SELECT * FROM SERVICES_EXPECTED_FROM_CONTRACT
 
  
 
@@ -407,7 +490,7 @@ INNER JOIN BABY_SITTER AS B ON B.BRANCH_ID = C.BRANCH_ID
 
 GROUP BY C.BRANCH_NAME,B.NATIONALITY
 
-ORDER BY C.BRANCH_NAME;
+ORDER BY C.BRANCH_NAME
 
  
 
@@ -441,7 +524,7 @@ SELECT * FROM CHILD_CONTACT_DETAILS;
 
  
 
---Query_20 -- LANGUAGES CHILDREN ARE COMFORTABLE IN 
+Query_20 -- LANGUAGES CHILDREN ARE COMFORTABLE IN 
 
 SELECT CL.FAMILY_ID, CL.CHILD_ID, C.FULL_NAME AS CHILD_NAME, CL.LANGUAGE_SPOKEN, F.FULL_NAME AS GUARDIAN_NAME
 
