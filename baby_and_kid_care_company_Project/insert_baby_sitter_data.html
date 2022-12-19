@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Insert Data Into a Database</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <form method="post" action="php/insertIntoValues_baby_sitter.php">
+      <fieldset>
+        <fieldset>
+        <legend>Enter the information of the baby sitter:</legend>
+        <label>SSN </label><input type="number" name="ssn" /> <br />
+        <label>Name</label><input type="text" name="bname" /> <br />
+        <label>Date of Birth</label><input type="date" name="bdate" /> <br />
+		<label>Nationality</label><input type="text" name="nationality" /> <br />
+        <label>Gender</label><br />
+        <input name="gender" type="radio" value="F" /> <label>Female</label>
+        <br />
+        <input name="gender" type="radio" value="M" /> <label>Male</label>
+        <br />
+        <input name="gender" type="radio" value="X" /> <label>Other</label>
+        <br />
+        <label>Available day of week</label>
+        <select name="dayofweek">
+          <option>Sunday</option>
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+		  <option>Thursday</option>
+          <option>Friday</option>
+          <option>Saturday</option>
+        </select>
+        <br />
+		<label>Available start time </label><input type="time" name="starttime" /> <br />
+		<label>Available end time </label><input type="time" name="endtime" /> <br />
+        <label>Other occupation </label><input type="text" name="otheroccupation" /> <br />
+		<label>highest education degree </label><input type="text" name="educationdegree" /> <br />
+		<label>Hourly pay rate </label><input type="number" name="payrate" /> <br />
+        <label>BranchID</label><input type="number" name="bid" /> <br />
+        
+		
+		
+		<br />
+        <input type="submit" value="Submit" />
+      </fieldset>
+
+      </fieldset>
+    </form>
+    <br />
+    <a href="index.html">Back to the homepage</a>
+  </body>
+</html>

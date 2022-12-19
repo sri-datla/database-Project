@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Select query retrieval</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <form method="post" action="php/selectAllQuery.php">
+      <fieldset>
+        <legend>Display All Baby sitters</legend>
+        <br />
+        <br />
+        <input type="submit" value="Submit" />
+      </fieldset>
+    </form>
+    <br />
+    <br />
+    <form method="post" action="php/selectLikeQuery.php">
+      <fieldset>
+        <legend>Display baby sitters whose name starts with</legend>
+        <label>Baby sitter name starts with</label>
+        <input type="text" name="bname" /> <br />
+        <br />
+        <input type="submit" value="Submit" />
+      </fieldset>
+    </form>
+
+    <br />
+    <br />
+    <form method="post" action="php/selectWhereQuery.php">
+      <fieldset>
+        <legend>Display baby sitters from a specific branch</legend>
+        <label>Branch ID</label> <input type="text" name="bid" /> <br />
+        <br />
+        <input type="submit" value="Submit" />
+      </fieldset>
+    </form>
+    <a href='index.html'>Back to the Homepage</a>
+  </body>
+</html>
