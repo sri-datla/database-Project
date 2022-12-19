@@ -4,7 +4,7 @@
 
 
 -- IF NOT EXSISTS COMMAND DOES NOT WORK HERE ON MSSQL BUT DOES WORK ON MSSQL
-CREATE DATABASE baby_and_kid_care_company;
+--CREATE DATABASE baby_and_kid_care_company;
 USE baby_and_kid_care_company;
 CREATE TABLE COMPANY(
 BRANCH_ID INT NOT NULL,

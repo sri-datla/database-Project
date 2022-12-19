@@ -1,5 +1,3 @@
-/* ENTIRE MS SQL CODE WORKS FINE ON MY SQL*/
-
 USE baby_and_kid_care_company;
 INSERT INTO COMPANY
 VALUES (1,'Vancouver Branch'), (2,'Toronto Branch'),
