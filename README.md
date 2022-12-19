@@ -1,5 +1,15 @@
 # Baby and Kid Care Company - database-Project
 
+The database store data about babysitters, families, and details of contracts between them.
+
+Data about babysitters: name, date of birth, highest education degree, skills (painting, singing, playing guitar, stand-up comedy…), availability time (days of week, from-to time,), gender, occupation (babysitting can be the second job of the person), SSN, nationality, languages that the person can speak.
+
+Data about families: full name of the family representative, address, phones, emails, marital status (married, divorced, single parent…)
+
+Data about the child that needs babysitting: name, date of birth, age, gender, disability (if the child has any), languages spoken…
+
+Data about contract: start and end date, the schedule of babysitting (time and activity done during that time), services expected from babysitter…
+
 Steps followed - 
 
 Step 1 - Planning & System analysis - Completed installation of MS SQL Server and MY SQL Workbench, Identified the objective for the project.
