@@ -457,15 +457,7 @@ ORDER BY C.FULL_NAME
 
 
 
-
-
-
-
-# Query_21 - Determining performance levels of baby sitters based on number of hours worked
-
- 
-
-MS SQL - 
+-- Query_21 - Determining performance levels of baby sitters based on number of hours worked
 
  
 
@@ -484,3 +476,22 @@ END AS PERFORMANCE_LEVEL
 FROM BABY_SITTER
 
 ORDER BY NUMBER_OF_HOURS DESC;
+
+
+-- Query_22 - Identifying number of male and female children in Vancouver Branch
+
+
+SELECT 'NUMBER_OF_CHILDREN' AS Gender, [Male],[Female]
+FROM
+(
+SELECT GENDER FROM
+COMPANY
+INNER JOIN FAMILY ON FAMILY.BRANCH_ID = COMPANY.BRANCH_ID
+INNER JOIN CHILD ON FAMILY.FAMILY_ID = CHILD.FAMILY_ID
+WHERE COMPANY.BRANCH_NAME = 'Vancouver Branch'
+) AS SOURCE_TABLE
+PIVOT
+(
+COUNT(GENDER)
+FOR GENDER IN ([Male],[Female])
+) AS PIVOT_TABLE
