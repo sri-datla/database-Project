@@ -1,4 +1,4 @@
-# database-Project
+# Baby and Kid Care Company - database-Project
 
 Steps followed - 
 
